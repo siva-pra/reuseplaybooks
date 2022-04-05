@@ -1,0 +1,12 @@
+- import_playbook: java.yaml
+- name: install utill
+  become: yes 
+  tasks: 
+    - name: install utils
+      package: 
+         name: "{{ item }}"
+         state: present 
+      loop: 
+        - git 
+        - nano 
+        - tree

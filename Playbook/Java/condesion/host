@@ -1,0 +1,4 @@
+[appserver]
+172.31.21.122 java_package=openjdk-11-jdk
+172.31.3.24 java_package=java-11-openjdk
+172.31.3.24 nodejs_package=nodejs 
