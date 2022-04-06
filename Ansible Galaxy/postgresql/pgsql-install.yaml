@@ -1,0 +1,7 @@
+--- 
+- name: install posgressql using ansible galaxy
+  hosts: database 
+  become: yes
+  roles: 
+    - role: buluma.postgres
+    
