@@ -1,0 +1,6 @@
+--- 
+- name: install mysql using ansible galaxy
+  hosts: database 
+  roles: 
+    - role: geerlingguy.mysql
+      become: yes
