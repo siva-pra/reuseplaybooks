@@ -1,7 +1,7 @@
 ---
 # handlers file for commen
-    - name: start, enable and reload the tomcat service
-      ansible.builtin.systemd:
+- name: start, enable and reload the tomcat service
+  ansible.builtin.systemd:
         name: 'tomcat.service'
         enabled: yes
         daemon_reload: yes

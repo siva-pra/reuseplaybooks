@@ -1,9 +1,9 @@
 --- 
-    - name: download jenkins
-      ansible.builtin.get_url:
+- name: download jenkins
+  ansible.builtin.get_url:
         url: "{{ jenkins_url }}"
         dest: "{{ tomcat_latest }}/webapps/{{ jankins_username }}"
         owner: "{{ username }}"
         group: "{{ username }}"
-      notify:
+  notify:
         - start, enable and reload the tomcat service  
