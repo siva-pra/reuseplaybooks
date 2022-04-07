@@ -1,7 +1,7 @@
 --- 
 - name: install tomcat and app depoly
   hosts: appserver
-  become: yes
   roles:
     - role : tomcat9
+      become: yes
 
