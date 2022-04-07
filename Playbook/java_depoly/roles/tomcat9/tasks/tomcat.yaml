@@ -1,78 +1,78 @@
 --- 
-    - name: create a tomcat user
-      ansible.builtin.user:
+- name: create a tomcat user
+  ansible.builtin.user:
         create_home: yes
         home: "{{ home_dir }}"
         name:  "{{ username }}"
         shell: "{{ default_shell }}"
         state: present 
-    - name: download tomcat
-      ansible.builtin.get_url:
+- name: download tomcat
+  ansible.builtin.get_url:
         url: "https://dlcdn.apache.org/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
         dest: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
-    - name: extract the tomcat 
-      ansible.builtin.unarchive:
+- name: extract the tomcat 
+  ansible.builtin.unarchive:
         src: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
         dest: "{{ home_dir }}"
         creates: "{{ home_dir }}/tmp/apache-tomcat-{{ tomcat_version }}"
         owner: "{{ username }}"
         group: "{{ username }}"
         remote_src: yes
-    - name: create symlink 
-      ansible.builtin.file: 
+- name: create symlink 
+  ansible.builtin.file: 
         src: "{{ home_dir }}/apache-tomcat-{{ tomcat_version }}"
         dest: "{{ tomcat_latest }}"
         owner: "{{ username }}"
         group: "{{ username }}"
         state: link
-    - name: change dir ownership tomcat
-      ansible.builtin.file:
+- name: change dir ownership tomcat
+  ansible.builtin.file:
         path: "{{ home_dir }}"
         state: directory
         recurse: yes
         owner: "{{ username }}"
         group: "{{ username }}"
-    - name: find .sh files
-      ansible.builtin.find:
+- name: find .sh files
+  ansible.builtin.find:
         paths: "{{ tomcat_latest_dir }}"
         patterns: "*.sh"
-      register: sh_tomcat_latest_bin
-    - name: print above tomcat .sh return values 
-      ansible.builtin.debug:
+  register: sh_tomcat_latest_bin
+- name: print above tomcat .sh return values 
+  ansible.builtin.debug:
         var: sh_tomcat_latest_bin 
-    - name: change user permissions
-      ansible.builtin.file:
+- name: change user permissions
+  ansible.builtin.file:
         path: "{{ item.path }}"
         owner: "{{ username }}"
         group: "{{ username }}"
         mode: '0755'
-      loop: "{{ sh_tomcat_latest_bin.files }}" 
-    - name: copy the tomcat service files
-      ansible.builtin.template:
+  loop: "{{ sh_tomcat_latest_bin.files }}" 
+- name: copy the tomcat service files
+  ansible.builtin.template:
         src: 'tomcat.service.j2'
         dest: "{{ tomcat_service_file }}"
         owner: "{{ username }}"
         group: "{{ username }}"
-      notify:
+  notify:
         - start, enable and reload the tomcat service
-    - name: Ensure the tomcat service start
-      ansible.builtin.systemd:
+- name: Ensure the tomcat service start
+  ansible.builtin.systemd:
         name: 'tomcat.service'
         state: 'started' 
-    - name: create the tomcat user file
-      ansible.builtin.template:
+- name: create the tomcat user file
+  ansible.builtin.template:
         src: 'tomcat-user.xml.j2'
         dest: "{{ tomcat_latest }}/{{ tomcat_user_xml_file }}"
         owner: "{{ username }}"
         group: "{{ username }}"
-      notify:
+  notify:
         - start, enable and reload the tomcat service 
-    - name: tomcat access the hostmanager and manager 
-      ansible.builtin.template:
+- name: tomcat access the hostmanager and manager 
+  ansible.builtin.template:
         src: 'manger-context.xml.j2'
         dest: "{{ item }}"
         owner: "{{ username }}"
         group: "{{ username }}"
-      loop: "{{ tomcat_user_acces_anywhere }}"
-      notify:
+  loop: "{{ tomcat_user_acces_anywhere }}"
+  notify:
         - start, enable and reload the tomcat service
