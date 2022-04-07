@@ -1,8 +1,8 @@
 ---
 # tasks file for commen
- - include_task: update.yaml
+ - include_tasks: update.yaml
    when: ansible_facts['os_family'] == "Debian"
- - include_task: java.yaml
- - include_task: tomcat.yaml
- - include_task: app-deploy.yaml
+ - include_tasks: java.yaml
+ - include_tasks: tomcat.yaml
+ - include_tasks: app-deploy.yaml
     
