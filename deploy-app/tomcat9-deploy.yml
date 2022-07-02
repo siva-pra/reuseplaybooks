@@ -1,0 +1,6 @@
+---
+- name: depoly the tomcat9 using role concept
+  hosts: appserver
+  roles:
+    - role: tomcat9
+      become: yes

@@ -1,0 +1,8 @@
+---
+# tasks file for common
+- include_tasks: debian-update.yml
+  when: ansible_facts['os_family'] == "Debian"
+- include_tasks: java-instll.yml  
+- include_tasks: tomcat-user.yml  
+- include_tasks: tomcat9-service.yml   
+- include_tasks: jenkins-install.yml    

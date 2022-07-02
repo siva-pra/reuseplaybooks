@@ -1,0 +1,19 @@
+---
+# defaults file for common
+
+     home_dir: /opt/tomcat 
+     username: tomcat
+     shell_bin: /bin/false
+     version: 9.0.64
+     tomcat_latest: /opt/tomcat/latest
+     tomcat_latest_sh_path: /opt/tomcat/latest/bin
+     tomact_service_path: /etc/systemd/system/tomcat.service
+     tomact_admin_username: devops
+     tomact_admin_password: devops
+     tomcat_user_web_interface: conf/tomcat-users.xml
+     tomcat_manager_host_allow :
+       - /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+       - /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
+     java_home: /usr/lib/jvm/java-11-openjdk-amd64
+     jenkins_name: jenkins.war
+     jenkins_url : https://mirrors.tuna.tsinghua.edu.cn/jenkins/war-stable/2.332.1/jenkins.war
